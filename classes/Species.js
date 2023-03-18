@@ -1,27 +1,45 @@
 const { FireType, WaterType, GrassType } = require("./Pokemon-Types");
-const Pokemon = require("./Pokemon");
 
 class Charmander extends FireType {
-    constructor() {
-        super();
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
+    }
+}
+
+class Flareon extends FireType {
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
     }
 }
 
 class Squirtle extends WaterType {
-    constructor() {
-        super();
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
+    }
+}
+
+class Vaporeon extends WaterType {
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
     }
 }
 
 class Bulbasaur extends GrassType {
-    constructor() {
-        super();
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
+    }
+}
+class Leafeon extends GrassType {
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
     }
 }
 
-class Eevee extends Pokemon {
-    constructor() {
-        super();
-    }
-}
-module.exports = { Charmander, Squirtle, Bulbasaur, Eevee };
+module.exports = {
+    Charmander,
+    Squirtle,
+    Bulbasaur,
+    Flareon,
+    Vaporeon,
+    Leafeon,
+};

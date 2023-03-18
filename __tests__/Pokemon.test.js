@@ -25,7 +25,6 @@ describe("Pokemon Class", () => {
     });
     test("Pokemons hit points are reduced with takeDamage method", () => {
         const newPoke = new Pokemon("Jersey", 12, 4, "bork");
-        console.log(newPoke);
         newPoke.takeDamage(5);
         expect(newPoke.hitPoints).toBe(7);
     });

@@ -1,8 +1,8 @@
 const Pokemon = require("./Pokemon");
 
 class FireType extends Pokemon {
-    constructor() {
-        super();
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
         this.type = "fire";
     }
     isEffectiveAgainst(atkType) {
@@ -20,8 +20,8 @@ class FireType extends Pokemon {
 }
 
 class WaterType extends Pokemon {
-    constructor() {
-        super();
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
         this.type = "water";
     }
     isEffectiveAgainst(atkType) {
@@ -39,8 +39,8 @@ class WaterType extends Pokemon {
 }
 
 class GrassType extends Pokemon {
-    constructor() {
-        super();
+    constructor(name, hitPoints, atkDamage, move) {
+        super(name, hitPoints, atkDamage, move);
         this.type = "grass";
     }
     isEffectiveAgainst(atkType) {
