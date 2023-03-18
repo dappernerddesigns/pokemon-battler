@@ -7,23 +7,11 @@ class Pokemon {
         this.move = move;
     }
     isEffectiveAgainst(atkType) {
-        if (this.type === "fire" && atkType === "grass") {
-            return true;
-        } else if (this.type === "water" && atkType === "fire") {
-            return true;
-        } else if (this.type === "grass" && atkType === "water") {
-            return true;
-        } else return false;
+        return false;
     }
 
     isWeakTo(attackerType) {
-        if (this.type === "fire" && attackerType === "water") {
-            return true;
-        } else if (this.type === "water" && attackerType === "grass") {
-            return true;
-        } else if (this.type === "grass" && attackerType === "fire") {
-            return true;
-        } else return false;
+        return false;
     }
     takeDamage(attackerDamage) {
         this.hitPoints -= attackerDamage;
