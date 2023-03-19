@@ -1,61 +1,74 @@
-const inquirer = require('inquirer');
-const Trainer = require('../classes/trainer.js');
+const inquirer = require("inquirer");
+const Trainer = require("../classes/Trainer");
 const {
-	Charmander,
-	Squirtle,
-	Bulbasaur,
-	Rattata,
-} = require('../classes/pokemonSpecies');
-const Battle = require('../classes/fight');
+    char,
+    squirt,
+    bulb,
+    flare,
+    vape,
+    leaf,
+    eevee,
+    blue,
+} = require("../classes/Pokedex");
+const Battle = require("../classes/Battle");
 
-const charmander = new Charmander(44, 17);
-const squirtle = new Squirtle(45, 16);
-const bulbasaur = new Bulbasaur(46, 15);
-const rattata = new Rattata(42, 15);
+const availablePokemon = {
+    Charmander: char,
+    Squirtle: squirt,
+    Bulbasaur: bulb,
+    Flareon: flare,
+    Vaporeon: vape,
+    Leafeon: leaf,
+    Eevee: eevee,
+};
+const playerOne = new Trainer();
 
-function playerOneBuilder(playerOneName) {
-	const playerOne = new Trainer(playerOneName);
-	return playerOne;
+function choosePokemon(inputPoke) {
+    for (poke in availablePokemon) {
+        if (poke === inputPoke) {
+            playerOne.catch(availablePokemon[poke]);
+        }
+    }
 }
 
-let playerOneMessage = [
-	{
-		message: 'Ok, player One, what is your name?',
-		type: 'input',
-		name: playerOneBuilder,
-	},
+function fight(playerOne, blue) {
+    const battle = new Battle();
+}
+const firstMessages = [
+    {
+        message: "Ok, player One, what is your name?",
+        type: "input",
+        name: "name",
+    },
+    {
+        type: "list",
+        name: "pokemon",
+        message: "Which pokemon do you choose?",
+        choices: [
+            "Charmander",
+            "Squirtle",
+            "Bulbasaur",
+            "Flareon",
+            "Vaporeon",
+            "Leafeon",
+            "Eevee",
+        ],
+    },
 ];
-console.log(`\n
-          /###########                                     ###########          
-################################################################################
-#########                       #################                      *########
- #######                          (###########                           #######
-  #####.                           ###########                           ###### 
-    ####                           ###    ####                           ####   
-    ####                          ###(     ####                          ####   
-     ####                        ###*       ####                        ####    
-      ####                     ####          *####                     ####     
-       ####,                ######             #####*                #####      
-         ######,      .########                  *#######,      .#######        
-             ##############                           #############(            
-                                                                                
-                                                                                
-                 *####/                                    #####                
-                ############*                        #############              
-               ##################                ##################             
-               ####################################################             
-               ####################################################             
-               ####################################################             
-               ###################################################/             
-               ################.                  ################              
-                ###########                            ###########              
-\n\n\n`);
+
+const secondMessages = [];
 
 console.log(
-	`Welcome to my Pokemon battle simulator - The Dapper Nerd \n -------`
+    `Welcome to my Pokemon battle simulator - The Dapper Nerd \n -------`
 );
 
-inquirer.prompt(playerOneMessage).then((answers) => {
-	console.log(answers);
-	console.log(`Welcome ${answers.name}`);
-});
+function playGame() {
+    inquirer.prompt(firstMessages).then((answers) => {
+        //console.log(answers);
+        playerOne.name = answers.name;
+        choosePokemon(answers.pokemon);
+        console.log(`Welcome! ${answers.name}, you chose ${answers.pokemon}!`);
+    });
+}
+
+playGame();
