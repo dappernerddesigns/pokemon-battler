@@ -17,6 +17,7 @@ class Trainer {
         const emptySlot = this.pokebelt.find((slot) => slot.isEmpty() === true);
         if (emptySlot) {
             emptySlot.throw(targetPokemon);
+            console.log(`${this.name} caught ${targetPokemon.name}!\n`);
         }
     }
 

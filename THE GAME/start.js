@@ -22,7 +22,8 @@ const availablePokemon = {
     Eevee: eevee,
 };
 const playerOne = new Trainer();
-
+let playerPokemon = "";
+let bluePokemon = "";
 function choosePokemon(inputPoke) {
     for (poke in availablePokemon) {
         if (poke === inputPoke) {
@@ -31,8 +32,11 @@ function choosePokemon(inputPoke) {
     }
 }
 
-function fight(playerOne, blue) {
-    const battle = new Battle();
+function fight(playerOne, blue, p1Poke, bPoke) {
+    const battle = new Battle(playerOne, blue);
+    playerPokemon = p1Poke;
+    bluePokemon = bPoke;
+    return { battle, playerPokemon, bluePokemon };
 }
 const firstMessages = [
     {
@@ -41,9 +45,9 @@ const firstMessages = [
         name: "name",
     },
     {
-        type: "list",
-        name: "pokemon",
-        message: "Which pokemon do you choose?",
+        type: "checkbox",
+        name: "pokemonSelection",
+        message: "Choose up to six Pokemon to battle:",
         choices: [
             "Charmander",
             "Squirtle",
@@ -53,22 +57,71 @@ const firstMessages = [
             "Leafeon",
             "Eevee",
         ],
+        validate: function (answer) {
+            if (answer.length > 6) {
+                return "You can only select up to six Pokemon.";
+            } else if (answer.length < 1) {
+                return "You must choose at least one Pokemon.";
+            }
+            return true;
+        },
     },
 ];
-
-const secondMessages = [];
 
 console.log(
     `Welcome to my Pokemon battle simulator - The Dapper Nerd \n -------`
 );
 
 function playGame() {
-    inquirer.prompt(firstMessages).then((answers) => {
-        //console.log(answers);
-        playerOne.name = answers.name;
-        choosePokemon(answers.pokemon);
-        console.log(`Welcome! ${answers.name}, you chose ${answers.pokemon}!`);
-    });
+    inquirer
+        .prompt(firstMessages)
+        .then((answers) => {
+            playerOne.name = answers.name;
+
+            answers.pokemonSelection.forEach((pokemon) => {
+                choosePokemon(pokemon);
+            });
+
+            blue.catch(char);
+            blue.catch(squirt);
+            blue.catch(bulb);
+            blue.catch(vape);
+            let welcomeString = `Welcome! ${answers.name}, you have chosen `;
+            answers.pokemonSelection.forEach((pokemon) => {
+                welcomeString += `${pokemon}, `;
+            });
+            welcomeString += `\n\nLet's get ready to battle!!\n`;
+            console.log(welcomeString);
+
+            const battlePrompt = {
+                type: "list",
+                name: "battlePokemon",
+                message: "Choose a pokemon to battle with:",
+                choices: answers.pokemonSelection,
+            };
+
+            return inquirer.prompt(battlePrompt);
+        })
+        .then((answers) => {
+            console.log(
+                `Alright! You chose ${answers.battlePokemon}, ${blue.name} chose Charmander!\n\nTime to battle!!\n`
+            );
+            return fight(playerOne, blue, answers.battlePokemon, "Charmander");
+        })
+        .then((answers) => {
+            playerPoke = playerOne.getPokemon(answers.playerPokemon);
+            bluePoke = blue.getPokemon(answers.bluePokemon);
+            while (playerPoke.hitPoints > 0 && bluePoke.hitPoints > 0) {
+                answers.battle.fight(
+                    playerOne.getPokemon(answers.playerPokemon),
+                    blue.getPokemon(answers.bluePokemon)
+                );
+                answers.battle.fight(
+                    blue.getPokemon(answers.bluePokemon),
+                    playerOne.getPokemon(answers.playerPokemon)
+                );
+            }
+        });
 }
 
 playGame();

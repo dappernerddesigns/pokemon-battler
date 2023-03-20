@@ -6,10 +6,9 @@ class Pokeball {
         if (target) {
             if (Object.keys(this.stored).length === 0) {
                 this.stored = target;
-                console.log(`You caught ${target.name}!`);
             }
         } else if (this.stored.hasOwnProperty("name")) {
-            console.log(`GO ${this.stored.name}!`);
+            console.log(`GO ${this.stored.name}!\n`);
             return this.stored;
         } else {
             console.log("This ball is empty");

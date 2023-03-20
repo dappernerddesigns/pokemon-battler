@@ -12,11 +12,11 @@ describe("Battle class", () => {
     describe("Battle properties", () => {
         test("Battle stores player one and player two", () => {
             expect(battle.playerOne).toEqual(red);
-            expect(battle.playerTwo).toEqual(blue);
         });
         test("Battle shows which players turn it is", () => {
             console.log(battle);
             expect(battle.attacker).toEqual(red);
+            expect(battle.defender).toEqual(blue);
         });
     });
     describe("Fight method", () => {
@@ -25,11 +25,55 @@ describe("Battle class", () => {
                 battle.attacker.getPokemon("Charmander"),
                 battle.defender.getPokemon("Squirtle")
             );
-            expect(blue.getPokemon("Squirtle").hitPoints).toBe(32);
+            expect(blue.getPokemon("Squirtle").hitPoints).toBe(35);
         });
         test("Turn changes, attacker should now be player two", () => {
-            console.log(battle);
             expect(battle.attacker.name).toBe("Blue");
+        });
+        test("Effective moves do 25% more damage", () => {
+            battle.fight(
+                battle.attacker.getPokemon("Squirtle"),
+                battle.defender.getPokemon("Charmander")
+            );
+            expect(red.getPokemon("Charmander").hitPoints).toBe(31.5);
+        });
+        test("Defender that is strong against attacking type take 0.75% damage", () => {
+            battle.fight(
+                battle.attacker.getPokemon("Charmander"),
+                battle.defender.getPokemon("Squirtle")
+            );
+            expect(blue.getPokemon("Squirtle").hitPoints).toBe(26);
+        });
+        test("When a pokemon faints the fight ends", () => {
+            console.log(red.pokebelt, blue.pokebelt);
+
+            battle.fight(
+                battle.attacker.getPokemon("Squirtle"),
+                battle.defender.getPokemon("Charmander")
+            );
+            battle.fight(
+                battle.attacker.getPokemon("Charmander"),
+                battle.defender.getPokemon("Squirtle")
+            );
+            battle.fight(
+                battle.attacker.getPokemon("Squirtle"),
+                battle.defender.getPokemon("Charmander")
+            );
+            battle.fight(
+                battle.attacker.getPokemon("Charmander"),
+                battle.defender.getPokemon("Squirtle")
+            );
+
+            expect(
+                battle.fight(
+                    battle.attacker.getPokemon("Squirtle"),
+                    battle.defender.getPokemon("Charmander")
+                )
+            ).toBe(
+                `Oh no! Charmander has fainted and can't continue. Squirtle wins this round!`
+            );
+
+            console.log(red.pokebelt, blue.pokebelt);
         });
     });
 });
