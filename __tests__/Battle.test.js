@@ -14,13 +14,13 @@ describe("Battle class", () => {
             expect(battle.playerOne).toEqual(red);
         });
         test("Battle shows which players turn it is", () => {
-            console.log(battle);
             expect(battle.attacker).toEqual(red);
             expect(battle.defender).toEqual(blue);
         });
     });
     describe("Fight method", () => {
         test("First turn, defending pokemon takes damage", () => {
+            battle.randomNum = 4;
             battle.fight(
                 battle.attacker.getPokemon("Charmander"),
                 battle.defender.getPokemon("Squirtle")
@@ -31,6 +31,7 @@ describe("Battle class", () => {
             expect(battle.attacker.name).toBe("Blue");
         });
         test("Effective moves do 25% more damage", () => {
+            battle.randomNum = 4;
             battle.fight(
                 battle.attacker.getPokemon("Squirtle"),
                 battle.defender.getPokemon("Charmander")
@@ -38,6 +39,7 @@ describe("Battle class", () => {
             expect(red.getPokemon("Charmander").hitPoints).toBe(31.5);
         });
         test("Defender that is strong against attacking type take 0.75% damage", () => {
+            battle.randomNum = 4;
             battle.fight(
                 battle.attacker.getPokemon("Charmander"),
                 battle.defender.getPokemon("Squirtle")
@@ -45,7 +47,7 @@ describe("Battle class", () => {
             expect(blue.getPokemon("Squirtle").hitPoints).toBe(26);
         });
         test("When a pokemon faints the fight ends", () => {
-            console.log(red.pokebelt, blue.pokebelt);
+            battle.randomNum = 4;
 
             battle.fight(
                 battle.attacker.getPokemon("Squirtle"),
@@ -72,8 +74,6 @@ describe("Battle class", () => {
             ).toBe(
                 `Oh no! Charmander has fainted and can't continue. Squirtle wins this round!`
             );
-
-            console.log(red.pokebelt, blue.pokebelt);
         });
     });
 });
