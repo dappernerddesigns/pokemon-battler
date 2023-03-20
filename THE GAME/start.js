@@ -111,16 +111,22 @@ function playGame() {
         .then((answers) => {
             playerPoke = playerOne.getPokemon(answers.playerPokemon);
             bluePoke = blue.getPokemon(answers.bluePokemon);
+            let atkPoke = playerPoke;
+            let defPoke = bluePoke;
             while (playerPoke.hitPoints > 0 && bluePoke.hitPoints > 0) {
-                answers.battle.fight(
-                    playerOne.getPokemon(answers.playerPokemon),
-                    blue.getPokemon(answers.bluePokemon)
-                );
-                answers.battle.fight(
-                    blue.getPokemon(answers.bluePokemon),
-                    playerOne.getPokemon(answers.playerPokemon)
-                );
+                if (answers.battle.attacker === playerOne) {
+                    atkPoke = playerPoke;
+                    defPoke = bluePoke;
+                } else {
+                    defPoke = playerPoke;
+                    atkPoke = bluePoke;
+                }
+                answers.battle.fight(atkPoke, defPoke);
             }
+            return answers.battle.fight(atkPoke, defPoke);
+        })
+        .then((stuff) => {
+            // stuff contains an object with the winning pokemon, winning trainer and loosing trainer.
         });
 }
 
